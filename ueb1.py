@@ -8,6 +8,9 @@ def sum(li):
     num+=i
   return num
 
+def nichts():
+  pass
+
 def check(li,multcount=0):
   bool=True
 
