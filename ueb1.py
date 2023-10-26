@@ -1,6 +1,6 @@
 import random
 import time 
-
+#abgabe von leonard und daniel bei dorian, ueb1
 
 
 
