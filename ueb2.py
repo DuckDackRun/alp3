@@ -31,8 +31,8 @@ und keine weiteren entfernt werden können -> das Schöne ist, jeder hat nun ein
 Wir haben eine Liste L mit Knoten und A mit Abhängigkeiten.
 
 Wir nehmen einen beliebigen Knoten und kennzeichnen ihn als gesehen
-1. Für alle Nachbarn besuchen wir iterativ einmal.
-2. Gehe zu Nachbar, Abhängigkeit speichern
+1. Besuche Vorgänger.
+2. Gehe zu Vorgänger, Abhängigkeit speichern
 2.1 falls nicht gesehen, als gesehen markieren. Wdh von Schritt 1
 2.2 gesehen -> Kreis. Knoten n ganz dick merken
 3.Nun gehen wir nochmal durch alle Abhängigkeit bis wir wieder eine abh zu n finden.
@@ -51,7 +51,7 @@ b)
 c) 
 
 15.
-Nicht für alle Durchläufe haben wir lineare laufzeit.
+Nicht für alle Durchläufe benötigen wir lineare laufzeit.
 Betrachtet man die letzten Summanden, dann findet man Ausdrücke
 wie (n-2)n+(n-1)+n*n, alles in O(n*n)
 
@@ -83,9 +83,9 @@ def TopoSort():
     input = readInt() #<- spezifikation?
     #input=input()#?
     n = next(input)
-
+    ans=[]
     # Inititalisieren array:
-    Knotenliste = [None] + [ Knoten(i) for i in range(1,n+1) ]
+    Knotenliste = [None] + [Knoten(i) for i in range(1,n+1) ]
     
     # Einlesen Kanten
     try:
@@ -95,6 +95,7 @@ def TopoSort():
             x = Kante(e,f)
             e.Nachfolgerliste.append(x)
             f.anzVorgänger+=1
+            f.Vorgangerliste.append(e)
     except StopIteration:
         pass
         
@@ -107,26 +108,48 @@ def TopoSort():
 
 
     # Sortieren:
-    print("");
+    print("")
     for i in range(1,n+1):#achso n mal einfach ausführen
+
+
         if freieKnoten == []:
-            kreis=circle_finder()
-            print("Die Eingabe enthält einen Kreis.")
+            gesehen=[]
+            kreis=[]
+
+            x = Knotenliste.pop()
+            while True:
+                vorg=x.Vorgangerliste[0]
+                kreis.append(x.Name)
+                if vorg in gesehen:   
+                    break
+                gesehen.append(x)
+                
+            print("Der Anfang kann der Sortierung kann ", ans," so aussehen.")
+            print("Die Eingabe enthält jedoch einen Kreis: ",kreis[::-1])
+
+
+
+
             return
         # Wähle einen Knoten ohne Vorgänger
         x = freieKnoten.pop()
-        print(x)
+        
+        ans.append(x)
         # Entferne ausgehende Kanten:
         for z in x.Nachfolgerliste:
             z.v.anzVorgänger -= 1
+            z.v.Vorgangerliste.remove(x)
             if z.v.anzVorgänger == 0:
                 freieKnoten.append(z.v)
+
+        Knotenliste=Knotenliste.remove(x)
 
 class Knoten:
     def __init__(self, i):
         self.Name = i
         self.anzVorgänger = 0
         self.Nachfolgerliste = []
+        self.Vorgangerliste = []
     def __str__(self):
         return str(self.Name)
 
