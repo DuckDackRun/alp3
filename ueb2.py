@@ -31,11 +31,11 @@ und keine weiteren entfernt werden können -> das Schöne ist, jeder hat nun ein
 Wir haben eine Liste L mit Knoten und A mit Abhängigkeiten.
 
 Wir nehmen einen beliebigen Knoten und kennzeichnen ihn als gesehen
-1. Besuche Vorgänger.
-2. Gehe zu Vorgänger, Abhängigkeit speichern
+1. Besuche irgendein Vorgänger.
 2.1 falls nicht gesehen, als gesehen markieren. Wdh von Schritt 1
 2.2 gesehen -> Kreis. Knoten n ganz dick merken
-3.Nun gehen wir nochmal durch alle Abhängigkeit bis wir wieder eine abh zu n finden.
+3.Nun gehen wir nochmal durch alle gespeicherten Knoten und entfernen n (Stelle, an dem wir ihn zuerst gesehen haben)
+4.Rückwärts ausgeben
 
 
 14.
@@ -90,16 +90,20 @@ def TopoSort():
     # Einlesen Kanten
     try:
         while True:
-            e = Knotenliste[next(input)]
+            einput=next(input)
+            if einput>n+1:  #strg d funktioniert nicht 
+                break
+            e = Knotenliste[einput]
             f = Knotenliste[next(input)]
             x = Kante(e,f)
             e.Nachfolgerliste.append(x)
             f.anzVorgänger+=1
-            f.Vorgangerliste.append(e)
+            f.Vorgangerliste.append(e)#sogar das objekt selbst
     except StopIteration:
         pass
         
     # Vorbereiten:
+    restknoten = [i for i in range(1,n+1)] #definieren restknoten, damit wir nur Knoten im Kreis beachten, die nicht rausgenommen wordne sind
     freieKnoten = []
     for i in range(1,n+1):
         e = Knotenliste[i]
@@ -113,19 +117,29 @@ def TopoSort():
 
 
         if freieKnoten == []:
-            gesehen=[]
-            kreis=[]
 
-            x = Knotenliste.pop()
+            v = restknoten[0]
+            x=Knotenliste[v] #<- pointer zum Objekt
+            gesehen=[x.Name]
+            print(gesehen)
             while True:
-                vorg=x.Vorgangerliste[0]
-                kreis.append(x.Name)
-                if vorg in gesehen:   
+                vorg=x.Vorgangerliste[0]#objekt knoten
+                print("Vorgänger",vorg.Name)
+                if vorg.Name in gesehen: 
+                    for i,n in enumerate(gesehen):
+                        if n==vorg.Name:
+                            gesehen=gesehen[i:]
+                            break
+                    gesehen.append(vorg.Name)
                     break
-                gesehen.append(x)
+                gesehen.append(vorg.Name)
+                x=vorg
+                print(gesehen)
+                    
+                
                 
             print("Der Anfang kann der Sortierung kann ", ans," so aussehen.")
-            print("Die Eingabe enthält jedoch einen Kreis: ",kreis[::-1])
+            print("Die Eingabe enthält jedoch einen Kreis: ",gesehen[::-1])
 
 
 
@@ -134,15 +148,17 @@ def TopoSort():
         # Wähle einen Knoten ohne Vorgänger
         x = freieKnoten.pop()
         
-        ans.append(x)
+        ans.append(x.Name)
         # Entferne ausgehende Kanten:
         for z in x.Nachfolgerliste:
             z.v.anzVorgänger -= 1
-            z.v.Vorgangerliste.remove(x)
+            z.v.Vorgangerliste.remove(x)#knoten entfernt
             if z.v.anzVorgänger == 0:
                 freieKnoten.append(z.v)
+        
+        restknoten.remove(x.Name)
 
-        Knotenliste=Knotenliste.remove(x)
+    print(ans)
 
 class Knoten:
     def __init__(self, i):
