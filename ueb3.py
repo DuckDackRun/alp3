@@ -1,4 +1,4 @@
-'''Daniel Yu, Loenard Goldmann
+'''Daniel Yu, Loenard Goldmann ... bei Dori
 
 21.
 z.z
@@ -18,26 +18,42 @@ Fall: u!=y!=x
 =>istenthalten(u, m)= istenthalten(u, m)
 
 Fall: u=x!=y
-kriegt man gut hin
+kriegt man gut hin, ich streike gegen meinen Übungspartner
 
 
 
 
 22.
 
-menge vereinige(menge,menge) mit vereinige: MxM->M
-menge schnitt(menge,menge) mit schnitt: MxM->M
+menge unite(menge,menge) mit vereinige: MxM->M
+dann ist:
+istenthalten(x, unite(A,B)) = istenthalten(x,A) or istenthalten(x,B) (1)
+istenthalten(x, einfügen(y, unite(A,B))) = True, für x = y 
+istenthalten(x, einfügen(y, m)) = istenthalten(x, m), f¨ur x̸ = y s.o.
+istenthalten(x, löschen(x, m)) = False f¨ur x = y 
+istenthalten(x, löschen(y, m)) = istenthalten(x, m), f¨ur x̸ = y s.o.
 
-#sehr verwirrt
+menge cut(menge,menge) mit schnitt: MxM->M
+dann ist:
+stenthalten(x, cut(A,B)) = istenthalten(x,A) and istenthalten(x,B) (1)
+istenthalten(x, einfügen(y, m)) = True, für x = y 
+istenthalten(x, einfügen(y, m)) = istenthalten(x, m), für x̸ = y s.o.
+istenthalten(x, löschen(x, m)) = False für x = y 
+istenthalten(x, löschen(y, m)) = istenthalten(x, m), f¨ur x̸ = y s.o.
+
 
 
 23.
 
 a) es wird ein Blatt nachgereicht
 b)
-höchstens 2^h-1, denn 
-mindestens 2^(h-1)+1 (wenn alle Knoten mit Tiefe <= h-2 zwei Knoten haben, ist bis h-1 alles vollständig)
-c) 
+höchstens 2^(h+1)-1, denn wenn wir alle Knoten besetzen bis h haben wir 1+2+4... also sum von i=0 bis h mit 2**i = 2^(h+1)-1
+mindestens 2^(h) (wenn alle Knoten mit Tiefe <= h-2 zwei Knoten haben, ist bis h-1 alles vollständig wie s.o. =>2^h-1+1=2^h)
+c)
+Sei n die Anzahl der Knoten eines vollst. balanc. Baum, dann gilt 2^h<=n<=2^(h+1)-1 
+also h<=logn  und n <=2^(h+1)-1 -> h >=log(n+1)-1
+so ist h element von theta(logn)
+Schranken lassen sich oben ableiten 
 
 24.
 das ist eine Form eine Menge darzustellen, anhand der Reihenfolge der Operationen, die ausgeführt worden sind.
