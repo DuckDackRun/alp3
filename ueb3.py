@@ -18,9 +18,7 @@ Fall: u!=y!=x
 =>istenthalten(u, m)= istenthalten(u, m)
 
 Fall: u=x!=y
-kriegt man gut hin, ich streike gegen meinen Übungspartner
-
-
+kriegt man gut hin
 
 
 22.
@@ -42,10 +40,10 @@ istenthalten(x, löschen(x, m)) = False für x = y
 istenthalten(x, löschen(y, m)) = istenthalten(x, m), f¨ur x̸ = y s.o.
 
 
-
 23.
 
 a) es wird ein Blatt nachgereicht
+
 b)
 höchstens 2^(h+1)-1, denn wenn wir alle Knoten besetzen bis h haben wir 1+2+4... also sum von i=0 bis h mit 2**i = 2^(h+1)-1
 mindestens 2^(h) (wenn alle Knoten mit Tiefe <= h-2 zwei Knoten haben, ist bis h-1 alles vollständig wie s.o. =>2^h-1+1=2^h)
