@@ -8,6 +8,26 @@ Daniel Yu und Leonard Goldmann
 um einen Parameter b ∈ R verschiebt:
 H = verschiebe(F,b)
 Es soll H(x) = F (x + b) sein ¨uberall dort, wo F (x + b) definiert ist.
+
+
+'''
+def v(st,b):
+    l=st[0]+b
+    r=st[-1]+b
+    ans=[]
+    i=0
+    while l<=st[i]<r:#while bedingung, dass sti zwischen l und r wäre robuster 
+        if st[i]>r:
+            ans.append(r)
+            break
+        ans.append(st[i]+b)
+        ans.append(st[i+1])
+        i+=2
+    ans.append(r)
+    return ans
+        
+
+'''
 (b) Wie entsteht der Graph von H aus dem Graphen von F , wenn b = 1 ist?
 
 29. Fallunterscheidung, 10 Punkte, Programmieraufgabe
