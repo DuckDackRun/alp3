@@ -204,11 +204,27 @@ hm 2+8+32+2**7=170. Da 1<3<5<7<100 liegt alles im ersten Block (170 zusammenaddi
 sierung und zu contains auch die Operationen add (Hinzuf¨ugen eines Elemen-
 tes), union (Vereinigungsmenge) und isempty (Test auf leere Menge) enth¨alt.
 
+Gedanklich ist es ein Bitvektor, welcher mittels Bit und geschickter Planung bestimmte Zahlen speichern kann.
+Wir definieren wie auf einer Menge Operationen wie bool contains(Bitset,Element),bool add(Bitset,Element),Bitset union(Bitset,Bitset) und bool isempty(Bitset).
 
 
 (c) Spezifizieren sie alle Operationen und den Konstruktor durch die n¨otigen Vor-
 bedingungen und Nachbedingungen.
 
+Konstruktur:
+keine Vorbedingungen, Nachbedingung: leere Liste
+
+Operation contains:
+Vorbedingung: Int zum Vergleichen, keine Nachbedin
+
+Operation add:
+Vorbedingung: Bitset, Int zum Vergleichen und Einfügen, Nachbedingung: garantiert enthalten
+
+Operation union:
+Vorbedingung: zwei Bitset, Nachbedingung: enthält Elems beider Bitsets garantiert
+
+Operation isempty:
+Vorbedingung: Bitset, Nachbedingung: keine
 
 (d) Erg¨anzen Sie die Implementierung der entsprechenden Methoden in Java oder
 Python.
@@ -220,7 +236,9 @@ ten und Nebenbedingungen dieser Implementierung an. Geben Sie an, was bei
 Verletzung der Nebenbedingungen passiert. (Die Korrektheit brauchen Sie nicht
 zu beweisen.)
 
+Die Abstarktionsfkt nimmt Größe G, maxWert W und eine Folge von Binärstrings [p1,..,pn] ein, also
 
+dann ist A(G,W,[p1,...,pn]) ={j+64*i-1 | für alle i aus N mit 1<=i<=n: für alle j aus N mit 0<=j<=63: (pi >> j) & 1 ==1}
 
 (f) (0 Punkte) In gewissen F¨allen wird bei dieser Implementierung Speicherplatz
 verschwendet? Wie kann man das vermeiden?
@@ -234,8 +252,13 @@ a = a1a2 . . . am, b = b1b2 . . . bn und c = c1c2 . . . uu seien W¨orter der L�
 ¨uber einem Alphabet Σ, das heißt, Folgen von Symbolen ai, bi, ci ∈ Σ.
 Definieren Sie in der Sprache der Pr¨adikatenlogik folgende Aussagen pr¨azise:
 (a) ab = c, das heißt, c entsteht durch Hintereinanderschreiben von a und b.
+
+ab = c genau dann wenn (Für alle i aus {1..m} mit {a_i},{c_i} aus sigma ist {a_i} gleich {c_i}) und Für alle i aus {m+1..m+n} mit {b_i-m},{c_i} aus sigma ist {b_i-m} gleich {c_i}) und n+m=u
+
 (b) a kommt in b als Teilwort vor. (Sie k¨onnen die in 35a definierte Verkn¨upfung
 zweier W¨orter verwenden, oder es direkt definieren.)
+
+a Teilwort b genau dann wenn Es existiert eine Zerlegung b_1,b_2,b_3 aus sigma* vereinigt {epsilon} mit b_1b_2b_3=b (Satz aus a)):b2=a
 1https://mycampus.imp.fu-berlin.de/x/WGOPZe und https://mycampus.imp.fu-berlin.de/x/ZhD8nM
 8'''
 
